@@ -1,0 +1,127 @@
+<head>
+  <title>Temprature Converter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <style>
+        *{
+            font-family:Montserrat;
+        }
+        body {
+  margin: 0;
+  
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(45deg, #ff9900, #000000);
+}
+
+#temp-converter {
+  max-width: 400px;
+  width: 90%;
+  padding: 20px;
+  border-radius: 16px; /* Rounder edges */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.9);
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+input, select, button {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px; /* Rounder edges */
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #ff9900; /* Orange background */
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Animation */
+  border: none;
+}
+
+button:hover {
+  background-color: #e67e00; /* Darker orange on hover */
+  transform: scale(1.1); /* Slight zoom effect */
+}
+
+button:active {
+  transform: scale(1); /* Reset on click */
+}
+
+#result {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+    </style>
+</head>
+<div id="temp-converter">
+    <h1>Temperature Converter</h1>
+    
+    <!-- Input Field -->
+    <label for="temp-input">Enter Temperature:</label>
+    <input type="number" id="temp-input" placeholder="Enter value..." />
+    
+    <!-- Conversion Options -->
+    <label for="temp-scale">Select Unit:</label>
+    <select id="temp-scale">
+      <option value="celsius">Celsius</option>
+      <option value="fahrenheit">Fahrenheit</option>
+      <option value="kelvin">Kelvin</option>
+    </select>
+    
+    <!-- Convert Button -->
+    <button id="convert-btn">Convert</button>
+    
+    <!-- Display Result -->
+    <div id="result" style="margin-top: 20px; font-weight: bold;">Converted Temperature: <span id="converted-value">--</span></div>
+  </div>
+  <script>
+  document.getElementById('convert-btn').addEventListener('click', () => {
+    const tempInput = document.getElementById('temp-input').value;
+    const tempScale = document.getElementById('temp-scale').value;
+    
+    // Validate input
+    if (!tempInput || isNaN(tempInput)) {
+      alert('Please enter a valid number.');
+      return;
+    }
+    
+    const temperature = parseFloat(tempInput);
+    let result = '';
+  
+    // Conversion logic
+    switch (tempScale) {
+      case 'celsius':
+        result = `Fahrenheit: ${(temperature * 9/5 + 32).toFixed(2)} °F, Kelvin: ${(temperature + 273.15).toFixed(2)} K`;
+        break;
+      case 'fahrenheit':
+        result = `Celsius: ${((temperature - 32) * 5/9).toFixed(2)} °C, Kelvin: ${(((temperature - 32) * 5/9) + 273.15).toFixed(2)} K`;
+        break;
+      case 'kelvin':
+        result = `Celsius: ${(temperature - 273.15).toFixed(2)} °C, Fahrenheit: ${((temperature - 273.15) * 9/5 + 32).toFixed(2)} °F`;
+        break;
+      default:
+        result = 'Invalid selection.';
+    }
+  
+    // Display result
+    document.getElementById('converted-value').textContent = result;
+  });
+  </script>
